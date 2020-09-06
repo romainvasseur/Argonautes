@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Argonaute;
+use App\Form\ArgonauteType;
 use App\Repository\ArgonauteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,35 +20,25 @@ class ArgonautesController extends AbstractController
         $this->repo = $repo;
     }
 
-    private function form() {
-        $form = $this->CreateFormBuilder()
-            ->add('name', TextType::class)
-            ->add('submit', SubmitType::class)
-            ->getForm()
-        ;
-        return $form;
-    }
-
     /**
      * @Route("/", name="app_index")
      */
     public function Read(Request $request, EntityManagerInterface $em)
     {
-        $form = $this->form();
+        $argonaute = new Argonaute;
+        $form = $this->createForm(ArgonauteType::class, $argonaute);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-            $argonaute = new Argonaute;
-            $argonaute->setName($data['name']);
             $em->persist($argonaute);
             $em->flush();
             return $this->redirectToRoute('app_index', [
                 'argonautes' => $this->repo->findAll(),
-                'form' => $form = $this->form()->createView(),]);
+                'form' => $form->createView()
+            ]);
         }
         return $this->render('argonautes/index.html.twig', [
             'argonautes' => $this->repo->findAll(),
-            'form' => $form = $this->form()->createView(),
+            'form' => $form->createView()
         ]);
     }
 }

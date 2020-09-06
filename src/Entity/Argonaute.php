@@ -2,9 +2,9 @@
 
 namespace App\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
-use App\Repository\ArgonauteRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ArgonauteRepository;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ArgonauteRepository::class)
@@ -20,7 +20,6 @@ class Argonaute
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Assert\Unique
      */
     private $name;
 
