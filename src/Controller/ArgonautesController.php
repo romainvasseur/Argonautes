@@ -41,6 +41,9 @@ class ArgonautesController extends AbstractController
             $argonaute->setName($data['name']);
             $em->persist($argonaute);
             $em->flush();
+            return $this->redirectToRoute('app_index', [
+                'argonautes' => $this->repo->findAll(),
+                'form' => $form = $this->form()->createView(),]);
         }
         return $this->render('argonautes/index.html.twig', [
             'argonautes' => $this->repo->findAll(),
