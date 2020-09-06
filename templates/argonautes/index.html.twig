@@ -1,0 +1,129 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Les argonautes' %}
+
+{% block body %}
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  position: relative;
+  min-height: 100vh;
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+header {
+  background: #f4f4f4;
+  text-align: center;
+  padding: 2em;
+}
+
+header img {
+  max-width: 96px;
+}
+
+header h1 {
+  font-size: 2.5em;
+}
+
+h1, h2 {
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+.new-member-form {
+  margin: 2em 0 4em 0;
+  text-align: center;
+}
+
+.member-item {
+  padding: 0.25em 0;
+}
+
+.member-list {
+    margin-left:auto; 
+    margin-right:auto;
+}
+
+table {
+    border-spacing: 2em;
+    padding-bottom: 2em;
+}
+
+footer {
+  margin-top: 2em;
+  text-align: center;
+  color: #fff;
+  background: #f76c6c;
+  padding: 0.25em 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+
+}
+
+</style>
+
+<!-- Header section -->
+<header>
+    <h1>
+      <img src="https://www.wildcodeschool.com/assets/logo_main-e4f3f744c8e717f1b7df3858dce55a86c63d4766d5d9a7f454250145f097c2fe.png" alt="Wild Code School logo" />
+      Les Argonautes
+    </h1>
+  </header>
+  
+  <!-- Main section -->
+  <main>
+    
+    <!-- New member form -->
+    <h2>Ajouter un(e) Argonaute</h2>
+    <div class="new-member-form">
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
+            <p>
+                {{ form_label(form.name, 'Nom de l\'Argonaute') }}
+                {{ form_widget(form.name, { 'attr': { 'placeholder': 'Charalampos' }}) }}
+                {{ form_widget(form.submit, { 'label': 'Envoyer' }) }}
+            </p>
+        {{ form_end(form) }}
+    </div>
+    
+    <!-- Member list -->
+    <h2>Membres de l'équipage</h2>
+    <section>
+        <table class="member-list">
+        {% set columns = 3 %}
+        {% for argonaute in argonautes %}
+            {% if loop.first or loop.index0 is divisible by(columns) %}
+                <tr>
+            {% endif %}
+            <td class="member-item">{{ argonaute.name }}</td>
+            {% if loop.last and loop.index is not divisible by(columns) %}
+                {% for n in range(low=columns - (loop.index % columns), high=1, step=-1) %}
+                    <td>&nbsp;</td>
+                {% endfor %}
+            {% endif %}
+            {% if loop.last or loop.index is divisible by(columns) %}
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </table>
+    </section>
+  </main>
+  
+  <footer>
+    <p>Réalisé par Jason en Anthestérion de l'an 515 avant JC</p>
+  </footer>
+
+{% endblock %}
