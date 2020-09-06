@@ -2,8 +2,9 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" href="/argonautes/style.css">
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
+        {% endblock %}
     </head>
     <body>
         {% block body %}{% endblock %}
