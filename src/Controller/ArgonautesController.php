@@ -23,7 +23,7 @@ class ArgonautesController extends AbstractController
     /**
      * @Route("/", name="app_index")
      */
-    public function Read(Request $request, EntityManagerInterface $em)
+    public function ReadCreate(Request $request, EntityManagerInterface $em)
     {
         $argonaute = new Argonaute;
         $form = $this->createForm(ArgonauteType::class, $argonaute);

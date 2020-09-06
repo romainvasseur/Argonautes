@@ -16,10 +16,13 @@
   <main>
     
     <!-- New member form -->
+    {% if argonautes|length > 49 %}
+    <h2>L'équipage est au complet!</h2>>
+    {% else %}
     <h2>Ajouter un(e) Argonaute</h2>
     <div class="new-member-form">
         {{ form_start(form) }}
-            {{ form_errors(form) }}
+        {{ form_errors(form.name) }}
             <p>
                 {{ form_label(form.name, 'Nom de l\'Argonaute') }}
                 {{ form_widget(form.name, { 'attr': { 'placeholder': 'Charalampos' }}) }}
@@ -27,9 +30,9 @@
             </p>
         {{ form_end(form) }}
     </div>
-    
+    {% endif %}
     <!-- Member list -->
-    <h2>Membres de l'équipage</h2>
+    <h2>Membres de l'équipage ({{ argonautes|length }}/50)</h2>
     <section>
         <table class="member-list">
         {% set columns = 3 %}

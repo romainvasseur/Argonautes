@@ -4,10 +4,12 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ArgonauteRepository;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ArgonauteRepository::class)
+ * @UniqueEntity("name", message="Cet argonaute est déjà inscrit!")
  */
 class Argonaute
 {
@@ -19,7 +21,8 @@ class Argonaute
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @Assert\Type(type={"alpha"}, message="Un nom d'argonaute ne peux contenir que des lettres !")
      */
     private $name;
 
